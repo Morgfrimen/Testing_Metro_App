@@ -26,7 +26,6 @@ namespace Testing_Metro_App
         private static void Instance_PrintErrorEvents(Exception obj)
         {
             Console.Clear();
-            Console.Beep();
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.BackgroundColor = ConsoleColor.White;
             Console.WriteLine(obj.Message);

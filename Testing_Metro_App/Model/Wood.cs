@@ -14,10 +14,9 @@ namespace Testing_Metro_App.Model
             try
             {
                 Task<IList<int>> taskCreateIndexList;
-                uint maxIndexMatrix;
                 uint[,] matrix;
                 CreateMatrixConnection();
-                string[] str = GetResultOutput(taskCreateIndexList.Result, maxIndexMatrix);
+                string[] str = GetResultOutput(taskCreateIndexList.Result);
 
                 return str;
 
@@ -25,28 +24,16 @@ namespace Testing_Metro_App.Model
 
                 void CreateMatrixConnection()
                 {
-                    uint maxValueT1 = nodes.Max(item => item.Item1);
-                    uint maxValueT2 = nodes.Max(item => item.Item2);
-                    maxIndexMatrix = new[] {maxValueT1, maxValueT2}.Max();
-                    matrix = new uint[maxIndexMatrix, maxIndexMatrix];
-                    maxIndexMatrix -= 1;
-                    taskCreateIndexList = Task.Run(() => GetList(maxIndexMatrix));
-
+                    matrix = new uint[nodes[0].Item1, nodes[0].Item2];
+                    taskCreateIndexList = Task.Run(() => GetList(nodes[0].Item1 - 1));
+                    nodes.Remove(nodes[0]);
+                    
+                    uint indexCount = default;
                     foreach ((uint, uint) valueTuple in nodes)
                     {
-                        if (valueTuple.Item1 == valueTuple.Item2)
-                            throw new ArgumentException
-                                ("Строка в input.txt не может быть одинакова");
-
-                        uint index1 = valueTuple.Item1 - 1;
-                        uint index2 = valueTuple.Item2 - 1;
-
-                        if (matrix[index1, index2] != 0 || matrix[index2, index1] != 0)
-                            throw new InvalidOperationException
-                                ("В строке есть повторяющиеся соединения");
-
-                        matrix[index1, index2] = 1;
-                        matrix[index2, index1] = 1;
+                        matrix[valueTuple.Item1 - 1, indexCount] = 1;
+                        matrix[valueTuple.Item2 - 1, indexCount] = 1;
+                        indexCount++;
                     }
                 }
 
@@ -58,13 +45,14 @@ namespace Testing_Metro_App.Model
                     return Task.FromResult(listIndex);
                 }
 
-                string[] GetResultOutput(IList<int> indexColumn, uint maxIndex)
+                string[] GetResultOutput(IList<int> indexColumn)
                 {
                     List<string> result = new();
                     List<int> localIterationCountConnection = new();
                     uint countIteration = 1;
+                    int maxIndex = indexColumn.Last() - 1;
                     RecursiveFindValue(indexColumn);
-                    if (localIterationCountConnection.Count != maxIndex + 1)
+                    if (localIterationCountConnection.Count != maxIndex)
                         Logger.Logger.Instance.OnPrintWarring("Количество не сошлось...");
 
                     return result.ToArray();
@@ -89,8 +77,9 @@ namespace Testing_Metro_App.Model
                         }
 
                         countIteration++;
-                        list = list.Union(localIterationCountConnection).ToList();
-                        if (countIteration != maxIndexMatrix + 1) RecursiveFindValue(list);
+                        list = list.Except(localIterationCountConnection).ToList();
+                        if (countIteration != maxIndex + 1 || list.Count != default)
+                            RecursiveFindValue(list);
                     }
 
 #endregion

@@ -7,18 +7,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="InputFile\**" />
-	  <EmbeddedResource Remove="InputFile\**" />
-	  <None Remove="InputFile\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Remove="Readme.md" />
 		<None Remove="Тестовое задание - разработчик СSharp[2].pdf" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="WriteFile\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="InputFile\InputDefault.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>
