@@ -50,9 +50,9 @@ namespace Testing_Metro_App.Model
                     List<string> result = new();
                     List<int> localIterationCountConnection = new();
                     uint countIteration = 1;
-                    int maxIndex = indexColumn.Last() - 1;
+                    int maxIndex = indexColumn.Last();
                     RecursiveFindValue(indexColumn);
-                    if (localIterationCountConnection.Count != maxIndex)
+                    if (localIterationCountConnection.Count != maxIndex + 1)
                         Logger.Logger.Instance.OnPrintWarring("Количество не сошлось...");
 
                     return result.ToArray();
