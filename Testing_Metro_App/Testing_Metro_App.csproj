@@ -13,6 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Remove="Readme.md" />
 		<None Remove="Тестовое задание - разработчик СSharp[2].pdf" />
 	</ItemGroup>
 
