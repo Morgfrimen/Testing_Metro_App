@@ -45,7 +45,7 @@ namespace Testing_Metro_App
                                                  (
                                                      Path.Combine("InputFile", "InputDefault.txt")
                                                  );
-                string[] test = Wood.CreateWood(readerList);
+                await WriteFile.WriteTxtFile.WriteInFile(Wood.CreateWood(readerList));
             }
             catch
             {

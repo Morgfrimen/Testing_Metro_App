@@ -64,7 +64,7 @@ namespace Testing_Metro_App.Model
                     List<int> localIterationCountConnection = new();
                     uint countIteration = 1;
                     RecursiveFindValue(indexColumn);
-                    if (localIterationCountConnection.Count != maxIndex)
+                    if (localIterationCountConnection.Count != maxIndex + 1)
                         Logger.Logger.Instance.OnPrintWarring("Количество не сошлось...");
 
                     return result.ToArray();
