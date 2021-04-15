@@ -10,7 +10,16 @@ namespace Testing_Metro_App.Model
 
         internal static Wood CreateWood<T1, T2>(IList<(T1, T2)> nodes)
         {
-            throw new NotImplementedException();
+			try
+			{
+				throw new NotImplementedException();
+			}
+			catch (Exception e)
+			{
+			    Logger.Logger.Instance.OnPrintError(e);
+
+                throw;
+            }
         }
 	}
 }

@@ -24,8 +24,14 @@ namespace Testing_Metro_App
 
 		static async Task Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
-            IList<(uint, uint)> readerList = await ReaderFile.ReaderTxtFile.ReadFile(Path.Combine("InputFile","InputDefault.txt"));
+			try
+			{
+				IList<(uint, uint)> readerList = await ReaderFile.ReaderTxtFile.ReadFile(Path.Combine("InputFile", "InputDefault.txt"));
+			}
+			catch
+			{
+                Console.WriteLine("Произошла ошибка");
+			}
         }
 	}
 }
