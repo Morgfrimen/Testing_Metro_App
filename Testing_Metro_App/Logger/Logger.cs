@@ -15,10 +15,17 @@ namespace Testing_Metro_App.Logger
 
 
         internal event Action<Exception> PrintErrorEvents;
+        internal event Action<string> PrintWarring; 
 
         internal void OnPrintError(Exception obj)
         {
             this.PrintErrorEvents?.Invoke(obj);
+        }
+
+
+        internal void OnPrintWarring(string obj)
+        {
+            this.PrintWarring?.Invoke(obj);
         }
     }
 }
