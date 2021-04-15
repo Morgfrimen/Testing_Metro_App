@@ -5,8 +5,7 @@
 #region Fields
 
         private readonly INodeData _nodeDataLast;
-        private readonly INodeData _nodeDataNextLeft;
-        private readonly INodeData _nodeDataNextRight;
+        private readonly INodeData[] _nodeDataChild;
 
 #endregion
 
@@ -14,11 +13,7 @@
 
         internal Node(INodeData nodeDataLast) => _nodeDataLast = nodeDataLast;
 
-        internal Node(INodeData nodeDataLast, INodeData nodeDataNextLeft, INodeData nodeDataNextRight) : this(nodeDataLast)
-        {
-            _nodeDataNextLeft = nodeDataNextLeft;
-            _nodeDataNextRight = nodeDataNextRight;
-        }
+        internal Node(INodeData nodeDataLast, INodeData[] nodeDataChild) : this(nodeDataLast) => _nodeDataChild = nodeDataChild;
 
 #endregion
 
@@ -29,14 +24,9 @@
             get => _nodeDataLast;
         }
 
-        INodeData INodeData.NodeDataNextLeft
+        INodeData[] INodeData.NodeDataChild
         {
-            get => _nodeDataNextLeft;
-        }
-
-        INodeData INodeData.NodeDataNextRight
-        {
-            get => _nodeDataNextRight;
+            get => _nodeDataChild;
         }
 
         uint INodeData.Index { get; init; }
