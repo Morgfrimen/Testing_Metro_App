@@ -13,7 +13,7 @@ namespace Testing_Metro_App.Logger
 #region Events
 
         internal event Action<Exception> PrintErrorEvents;
-        internal event Action<string> PrintWarring;
+        internal event Action<string> PrintWarringEvents;
 
 #endregion
 
@@ -42,7 +42,7 @@ namespace Testing_Metro_App.Logger
 
         internal void OnPrintWarring(string obj)
         {
-            this.PrintWarring?.Invoke(obj);
+            this.PrintWarringEvents?.Invoke(obj);
         }
 
 #endregion

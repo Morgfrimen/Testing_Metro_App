@@ -15,7 +15,7 @@ namespace Testing_Metro_App
         static Program()
         {
             Logger.Logger.Instance.PrintErrorEvents += Instance_PrintErrorEvents;
-            Logger.Logger.Instance.PrintWarring += Instance_PrintWarring;
+            Logger.Logger.Instance.PrintWarringEvents += Instance_PrintWarring;
             Console.ResetColor();
         }
 
