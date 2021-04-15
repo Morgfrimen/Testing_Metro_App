@@ -14,6 +14,6 @@ namespace Testing_Metro_App.Logger
         }
 
 
-        private event Action<Exception> PrintError;
+        private event Action<Exception> PrintErrorEvents;
     }
 }
