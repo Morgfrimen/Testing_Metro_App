@@ -15,5 +15,10 @@ namespace Testing_Metro_App.Logger
 
 
         private event Action<Exception> PrintErrorEvents;
+
+        internal void OnPrintError(Exception obj)
+        {
+            this.PrintErrorEvents?.Invoke(obj);
+        }
     }
 }
