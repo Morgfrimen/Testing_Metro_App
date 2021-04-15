@@ -11,9 +11,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="InputFile\InputDefault.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
+		<None Update="InputFile\InputDefault.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>

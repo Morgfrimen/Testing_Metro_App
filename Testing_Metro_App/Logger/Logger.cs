@@ -4,18 +4,35 @@ namespace Testing_Metro_App.Logger
 {
     internal sealed class Logger
     {
-        private Logger(){}
+#region Static Fields and Constants
 
         private static Logger _instance;
+
+#endregion
+
+#region Events
+
+        internal event Action<Exception> PrintErrorEvents;
+        internal event Action<string> PrintWarring;
+
+#endregion
+
+#region Constructors
+
+        private Logger() { }
+
+#endregion
+
+#region Properties
 
         internal static Logger Instance
         {
             get => _instance ??= new Logger();
         }
 
+#endregion
 
-        internal event Action<Exception> PrintErrorEvents;
-        internal event Action<string> PrintWarring; 
+#region Methods
 
         internal void OnPrintError(Exception obj)
         {
@@ -27,5 +44,7 @@ namespace Testing_Metro_App.Logger
         {
             this.PrintWarring?.Invoke(obj);
         }
+
+#endregion
     }
 }

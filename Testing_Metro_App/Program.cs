@@ -4,44 +4,55 @@ using System.IO;
 using System.Threading.Tasks;
 
 using Testing_Metro_App.Model;
+using Testing_Metro_App.ReaderFile;
 
 namespace Testing_Metro_App
 {
-	class Program
-	{
+    internal class Program
+    {
+#region Constructors
+
         static Program()
         {
-			Logger.Logger.Instance.PrintErrorEvents += Instance_PrintErrorEvents;
-			Logger.Logger.Instance.PrintWarring += Instance_PrintWarring;
-			Console.ResetColor();
+            Logger.Logger.Instance.PrintErrorEvents += Instance_PrintErrorEvents;
+            Logger.Logger.Instance.PrintWarring += Instance_PrintWarring;
+            Console.ResetColor();
         }
 
-		private static void Instance_PrintWarring(string obj)
-		{
-            Console.WriteLine(obj);
-		}
+#endregion
 
-		private static void Instance_PrintErrorEvents(Exception obj)
-		{
-			Console.Clear();
+#region Methods
+
+        private static void Instance_PrintErrorEvents(Exception obj)
+        {
+            Console.Clear();
             Console.Beep();
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.BackgroundColor = ConsoleColor.White;
-			Console.WriteLine(obj.Message);
+            Console.WriteLine(obj.Message);
         }
 
-		static async Task Main(string[] args)
-		{
-			try
-			{
-				IList<(uint, uint)> readerList = await ReaderFile.ReaderTxtFile.ReadFile(Path.Combine("InputFile", "InputDefault.txt"));
+        private static void Instance_PrintWarring(string obj)
+        {
+            Console.WriteLine(obj);
+        }
 
-                var test = Wood.CreateWood(readerList);
+        private static async Task Main(string[] args)
+        {
+            try
+            {
+                IList<(uint, uint)> readerList = await ReaderTxtFile.ReadFile
+                                                 (
+                                                     Path.Combine("InputFile", "InputDefault.txt")
+                                                 );
+                string[] test = Wood.CreateWood(readerList);
             }
-			catch
-			{
+            catch
+            {
                 Console.WriteLine("Произошла ошибка");
-			}
+            }
         }
-	}
+
+#endregion
+    }
 }
