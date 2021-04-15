@@ -10,4 +10,10 @@
 		<None Remove="Тестовое задание - разработчик СSharp[2].pdf" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="InputFile\InputDefault.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
