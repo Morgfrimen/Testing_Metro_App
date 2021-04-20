@@ -78,7 +78,7 @@ namespace Testing_Metro_App.Model
 
                         countIteration++;
                         list = list.Except(localIterationCountConnection).ToList();
-                        if (countIteration != maxIndex + 1 || list.Count != default)
+                        if (list.Count != default)
                             RecursiveFindValue(list);
                     }
 
