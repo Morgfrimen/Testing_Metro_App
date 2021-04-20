@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Testing_Metro_App.Model
 {
-    internal sealed class Wood
+    internal static class Wood
     {
 #region Methods
 
