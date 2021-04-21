@@ -29,9 +29,12 @@ namespace Testing_Metro_App.Model
                         $"Количество узлов не входит в ограничения {MinCountNodes} <= N <= {MaxCountNodes}"
                     );
 
-                uint[,] matrix = new uint[nodes[0].Item1, nodes[0].Item2];
+                uint maxNodes = nodes[0].Item1;
+                uint maxConnection = nodes[0].Item2;
                 nodes.Remove(nodes[0]);
-                Task<int[]> taskCreateIndexList = Task.Run(() => GetIndexList((uint)matrix.GetLength(0)));
+
+                uint[,] matrix = new uint[maxNodes, maxConnection];
+                Task<int[]> taskCreateIndexList = Task.Run(() => GetIndexList(maxNodes));
 
                 CreateMatrixConnection();
                 string[] str = GetResultOutput(taskCreateIndexList.Result);
@@ -61,12 +64,12 @@ namespace Testing_Metro_App.Model
                     return Task.FromResult(listIndex);
                 }
 
-                string[] GetResultOutput(IList<int> indexColumn)
+                string[] GetResultOutput(IList<int> indexColumns)
                 {
                     List<int> localIterationCountConnection = new();
                     uint countIteration = StartFindCountConnection;
-                    int maxIndex = indexColumn[^1];
-                    RecursiveFindValue(indexColumn);
+                    int maxIndex = indexColumns[^1];
+                    RecursiveFindValue(indexColumns);
                     if (localIterationCountConnection.Count != maxIndex + 1)
                         Logger.Logger.Instance.OnPrintWarring("Количество не сошлось...");
 
