@@ -12,10 +12,12 @@ namespace Testing_Metro_App.Model
 
         private const uint MaxCountNodes = 1000;
         private const uint MinCountNodes = 1;
+        private const uint DefaultWeightConnection = 1;
+        private const uint StartFindCountConnection = 1;
 
 #endregion
 
-#region Methods
+        #region Methods
 
         internal static string[] CreateWood(IList<(uint, uint)> nodes)
         {
@@ -27,8 +29,10 @@ namespace Testing_Metro_App.Model
                         $"Количество узлов не входит в ограничения {MinCountNodes} <= N <= {MaxCountNodes}"
                     );
 
-                Task<IList<int>> taskCreateIndexList;
-                uint[,] matrix;
+                uint[,] matrix = new uint[nodes[0].Item1, nodes[0].Item2];
+                nodes.Remove(nodes[0]);
+                Task<int[]> taskCreateIndexList = Task.Run(() => GetIndexList((uint)matrix.GetLength(0)));
+
                 CreateMatrixConnection();
                 string[] str = GetResultOutput(taskCreateIndexList.Result);
 
@@ -38,38 +42,35 @@ namespace Testing_Metro_App.Model
 
                 void CreateMatrixConnection()
                 {
-                    matrix = new uint[nodes[0].Item1, nodes[0].Item2];
-                    taskCreateIndexList = Task.Run(() => GetList(nodes[0].Item1 - 1));
-                    nodes.Remove(nodes[0]);
                     uint indexCount = default;
 
                     foreach ((uint, uint) valueTuple in nodes)
                     {
-                        matrix[valueTuple.Item1 - 1, indexCount] = 1;
-                        matrix[valueTuple.Item2 - 1, indexCount] = 1;
+                        matrix[valueTuple.Item1 - 1, indexCount] = DefaultWeightConnection;
+                        matrix[valueTuple.Item2 - 1, indexCount] = DefaultWeightConnection;
                         indexCount++;
                     }
                 }
 
-                Task<IList<int>> GetList(uint maxIndexMatrix)
+                Task<int[]> GetIndexList(uint maxIndexMatrix)
                 {
-                    IList<int> listIndex = new List<int>();
-                    for (int index = 0; index <= maxIndexMatrix; index++) listIndex.Add(index);
+                    int[] listIndex = new int[maxIndexMatrix];
+                    for (int index = 0; index < maxIndexMatrix; index++)
+                        listIndex[index] = index;
 
                     return Task.FromResult(listIndex);
                 }
 
                 string[] GetResultOutput(IList<int> indexColumn)
                 {
-                    List<string> result = new();
                     List<int> localIterationCountConnection = new();
-                    uint countIteration = 1;
-                    int maxIndex = indexColumn.Last();
+                    uint countIteration = StartFindCountConnection;
+                    int maxIndex = indexColumn[^1];
                     RecursiveFindValue(indexColumn);
                     if (localIterationCountConnection.Count != maxIndex + 1)
                         Logger.Logger.Instance.OnPrintWarring("Количество не сошлось...");
 
-                    return result.ToArray();
+                    return GetResultStringArray(localIterationCountConnection);
 
 #region LocalMethod
 
@@ -87,12 +88,25 @@ namespace Testing_Metro_App.Model
                             if (localCount != countIteration) continue;
 
                             localIterationCountConnection.Add(columnIndex);
-                            result.Add((columnIndex + 1).ToString());
                         }
+                        
+                        list = list.Except(localIterationCountConnection).ToList();
+                        if (list.Count == default) return;
 
                         countIteration++;
-                        list = list.Except(localIterationCountConnection).ToList();
-                        if (list.Count != default) RecursiveFindValue(list);
+                        RecursiveFindValue(list);
+                    }
+
+                    string[] GetResultStringArray(IList<int> listResult)
+                    {
+                        string[] result = new string[listResult.Count];
+
+                        for (int index = 0; index < listResult.Count; index++)
+                        {
+                            result[index] = (listResult[index] + 1).ToString();
+                        }
+
+                        return result;
                     }
 
 #endregion
