@@ -7,7 +7,7 @@ namespace Testing_Metro_App.WriteFile
     internal static class WriteTxtFile
     {
         private const string DefaultNameFolder = "OutputFile";
-        private const string DefaultNameFile = "Output.txt";
+        private const string DefaultNameFile = "output.txt";
         internal static async Task WriteInFile(string[] array)
         {
             try
