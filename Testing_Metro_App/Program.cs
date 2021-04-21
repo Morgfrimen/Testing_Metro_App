@@ -5,11 +5,19 @@ using System.Threading.Tasks;
 
 using Testing_Metro_App.Model;
 using Testing_Metro_App.ReaderFile;
+using Testing_Metro_App.WriteFile;
 
 namespace Testing_Metro_App
 {
     internal class Program
     {
+#region Static Fields and Constants
+
+        private const string DefaultNameInputFile = "input.txt";
+        private const string DefaultNameInputFolder = "InputFile";
+
+#endregion
+
 #region Constructors
 
         static Program()
@@ -42,9 +50,13 @@ namespace Testing_Metro_App
             {
                 IList<(uint, uint)> readerList = await ReaderTxtFile.ReadFile
                                                  (
-                                                     Path.Combine("InputFile", "InputDefault.txt")
+                                                     Path.Combine
+                                                     (
+                                                         DefaultNameInputFolder,
+                                                         DefaultNameInputFile
+                                                     )
                                                  );
-                await WriteFile.WriteTxtFile.WriteInFile(Wood.CreateWood(readerList));
+                await WriteTxtFile.WriteInFile(Wood.CreateWood(readerList));
             }
             catch
             {
