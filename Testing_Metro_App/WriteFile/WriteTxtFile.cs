@@ -14,7 +14,11 @@ namespace Testing_Metro_App.WriteFile
             {
                 if (!Directory.Exists(DefaultNameFolder))
                     Directory.CreateDirectory(DefaultNameFolder);
-                await using StreamWriter streamWriter = new(Path.Combine(DefaultNameFolder, DefaultNameFile));
+#if !NET45
+				await using StreamWriter streamWriter = new(Path.Combine(DefaultNameFolder, DefaultNameFile)); 
+#else
+                using (StreamWriter streamWriter = new (Path.Combine(DefaultNameFolder, DefaultNameFile)))
+#endif
 				foreach (string str in array)
 				{
 					await streamWriter.WriteLineAsync(str);
