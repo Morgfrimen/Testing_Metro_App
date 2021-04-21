@@ -28,7 +28,7 @@ namespace Testing_Metro_App.ReaderFile
                         if (line is null) break;
 
                         line = line.Trim(' ');
-                        string[] stringArray = line.Split(" ");
+                        string[] stringArray = line.Split(' ');
                         numberLine++;
                         bool item1Boolean = uint.TryParse(stringArray[1], out uint item2);
                         bool item2Boolean = uint.TryParse(stringArray[0], out uint item1);
