@@ -46,22 +46,15 @@ namespace Testing_Metro_App
 
         private static async Task Main(string[] args)
         {
-            try
-            {
-                IList<(uint, uint)> readerList = await ReaderTxtFile.ReadFile
+            IList<(uint, uint)> readerList = await ReaderTxtFile.ReadFile
+                                             (
+                                                 Path.Combine
                                                  (
-                                                     Path.Combine
-                                                     (
-                                                         DefaultNameInputFolder,
-                                                         DefaultNameInputFile
-                                                     )
-                                                 );
-                await WriteTxtFile.WriteInFile(Wood.CreateWood(readerList));
-            }
-            catch
-            {
-                Console.WriteLine("Произошла ошибка");
-            }
+                                                     DefaultNameInputFolder,
+                                                     DefaultNameInputFile
+                                                 )
+                                             );
+            await WriteTxtFile.WriteInFile(Wood.CreateWood(readerList));
         }
 
 #endregion
