@@ -13,10 +13,9 @@ namespace Testing_Metro_App.ReaderFile
 
         internal static async Task<IList<(uint, uint)>> ReadFile(string path)
         {
-            IList<(uint, uint)> result = new List<(uint, uint)>();
-
             try
             {
+                IList<(uint, uint)> result = new List<(uint, uint)>();
                 using (StreamReader streamReader = new(path))
                 {
                     uint numberLine = default;
