@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,12 +8,25 @@ namespace Testing_Metro_App.Model
 {
     internal static class Wood
     {
+#region Static Fields and Constants
+
+        private const uint MaxCountNodes = 1000;
+        private const uint MinCountNodes = 1;
+
+#endregion
+
 #region Methods
 
         internal static string[] CreateWood(IList<(uint, uint)> nodes)
         {
             try
             {
+                if (!DataIsValidity(nodes[0].Item1))
+                    throw new InvalidDataException
+                    (
+                        $"Количество узлов не входит в ограничения {MinCountNodes} <= N <= {MaxCountNodes}"
+                    );
+
                 Task<IList<int>> taskCreateIndexList;
                 uint[,] matrix;
                 CreateMatrixConnection();
@@ -27,8 +41,8 @@ namespace Testing_Metro_App.Model
                     matrix = new uint[nodes[0].Item1, nodes[0].Item2];
                     taskCreateIndexList = Task.Run(() => GetList(nodes[0].Item1 - 1));
                     nodes.Remove(nodes[0]);
-                    
                     uint indexCount = default;
+
                     foreach ((uint, uint) valueTuple in nodes)
                     {
                         matrix[valueTuple.Item1 - 1, indexCount] = 1;
@@ -78,8 +92,7 @@ namespace Testing_Metro_App.Model
 
                         countIteration++;
                         list = list.Except(localIterationCountConnection).ToList();
-                        if (list.Count != default)
-                            RecursiveFindValue(list);
+                        if (list.Count != default) RecursiveFindValue(list);
                     }
 
 #endregion
@@ -94,6 +107,9 @@ namespace Testing_Metro_App.Model
                 throw;
             }
         }
+
+        private static bool DataIsValidity(uint countNodes) =>
+            countNodes is >=MinCountNodes and <=MaxCountNodes;
 
 #endregion
     }
