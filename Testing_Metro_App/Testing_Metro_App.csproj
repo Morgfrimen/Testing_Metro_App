@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net5</TargetFramework>
 		<LangVersion>9.0</LangVersion>
 	</PropertyGroup>
 
@@ -13,6 +13,10 @@
 
 	<ItemGroup>
 	  <Folder Include="WriteFile\" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework.Contains(`4`))' == 'true'">
+	  <PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
